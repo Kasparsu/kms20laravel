@@ -26,7 +26,23 @@
                         <p class="text-muted">{{$post->user->name}}</p>
                         <p class="text-muted datetime">{{$post->created_at->toISOString()}}</p>
                         <p class="text-muted">{{$post->created_at->diffForHumans()}}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <p class="text-muted"><b>Comments:</b>{{$post->comments()->count()}}</p>
+                        <p class="text-muted">
+                            @foreach($post->tags as $tag)
+                                <a href="{{route('tag', ['tag'=>$tag])}}">{{$tag->name}}</a>
+                            @endforeach
+                        </p>
+                        <p class="text-muted">
+                               <b>Likes:</b> {{$post->likes()->count()}}
+                                <a href="{{route('like', ['post'=>$post])}}">
+                                    @if($post->authHasLiked)
+                                        Unlike
+                                    @else
+                                        Like
+                                    @endif
+                                </a>
+                        </p>
+                        <a href="{{route('post', ['post'=>$post])}}" class="btn btn-primary">Read more</a>
                     </div>
                 </div>
             </div>
